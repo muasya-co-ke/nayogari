@@ -2,10 +2,41 @@
 
 import BaseDialog from "@/components/base/BaseDialog.vue";
 import router from "@/router/index.js";
-import {ref} from "vue"
+import {useRoute} from "vue-router";
+import {ref, onMounted} from "vue"
+import store from "@/store/index.js";
 const attemptSubmit = ()=>{
-  router.push({name:'login'})
+  store.state.carToRent.carObject = vehicleDetails?.value
+  if (route.name === 'car'){
+    store.state.rentCar = true
+    router.push({name:'login'})
+  }else {
+    router.push({name:'checkout'})
+  }
+
 }
+
+const route = useRoute()
+
+const vehicleDetails = ref({})
+
+const getVehicleById = ()=>{
+  store.dispatch('fetchSingleItem', {url:'cars', id:route.params.carId})
+      .then((res)=>{
+        vehicleDetails.value = res.data
+      })
+  // if (route?.name === 'car'){
+  //
+  // }else {
+  //   vehicleDetails.value = store.state.carToRent.carObject
+  // }
+
+
+}
+
+onMounted(()=>{
+  getVehicleById();
+})
 
 const dateRange = ref('')
 </script>
@@ -22,22 +53,14 @@ const dateRange = ref('')
       <div class="flex flex-col gap-4">
 
         <div class="w-full flex flex-col items-center justify-center gap-6">
-          <img class=" h-auto w-96" alt="bugatti" src="/bg1.png">
+          <img class=" h-auto w-96" :alt="vehicleDetails?.car_model" :src="vehicleDetails?.car_image">
         </div>
 
         <div class="flex flex-col gap-2 border-b">
           <span class="font-bold text-lg text-gray-500">About This Car</span>
-          <span>4 Seater</span>
-        </div>
-
-        <div class="flex flex-col gap-2 border-b">
-          <span class="font-bold text-lg text-gray-500">Capacity</span>
-          <span>4 Seater</span>
-        </div>
-
-        <div class="flex flex-col gap-2 border-b">
-          <span class="font-bold text-lg text-gray-500">Fuel Consumption</span>
-          <span>2000cc</span>
+          <el-tag>{{vehicleDetails?.car_number_plate}}</el-tag>
+          <span v-if="vehicleDetails?.car_description !== ''">{{vehicleDetails?.car_description}}</span>
+          <el-skeleton :rows="5" v-else/>
         </div>
 
         <div
@@ -45,7 +68,7 @@ const dateRange = ref('')
         >To Rent This Car , Select Start and End Period</div>
 
         <el-date-picker
-            v-model="dateRange"
+            v-model="store.state.carToRent.dateRange"
             type="daterange"
             size="large"
             clearable
@@ -56,7 +79,7 @@ const dateRange = ref('')
         />
 
         <el-button size="large" type="success"
-                   :disabled="dateRange ? false : true"
+                   :disabled="store.state.carToRent.dateRange ? false : true"
                    plain
                    class=""
                    round @click="attemptSubmit">Rent This Car</el-button>

@@ -104,7 +104,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           localStorage.setItem("authData", JSON.stringify(resp.data));
           loginLoading.value = false;
 
-          router.push({name:'checkout'})
+          if (store.state.rentCar) {
+            store.state.rentCar = false
+            router.push({name:'checkout'})
+          }else {
+            router.push({name:'cars'})
+          }
         })
           .catch((err)=>{
             loginLoading.value = false;

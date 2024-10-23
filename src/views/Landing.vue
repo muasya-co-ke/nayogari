@@ -1,12 +1,44 @@
 <script setup>
 
-import {ArrowLeft, ArrowRight} from "@element-plus/icons-vue";
+import {ArrowDown, ArrowLeft, ArrowRight} from "@element-plus/icons-vue";
 import CarCard from "@/views/car/CarCard.vue";
 import router from "@/router/index.js";
+import store from "@/store/index.js";
+import {onMounted, ref} from "vue"
 
-const viewCar = (id=1)=>{
-  router.push({name:'car',params:{id:id}});
+const viewCar = (id)=>{
+  router.push({name:'car',params:{carId:id}});
 }
+
+const vehicles = ref([])
+
+const pageCount = ref(1)
+const loadMore = ref(false)
+const loadMoreCars = ()=>{
+  pageCount.value += 1
+  loadMore.value = true
+  getVehicles()
+}
+
+const getVehicles  = ()=>{
+      store.dispatch("fetchList", {url: `cars?page=${pageCount.value}`})
+        .then((res)=>{
+
+          if (loadMore) {
+            res?.data?.results.map((item)=>{
+              vehicles?.value.push(item)
+            })
+          }else {
+            vehicles.value = res?.data?.results
+          }
+        })
+    ;
+}
+
+
+onMounted(()=>{
+  getVehicles()
+})
 </script>
 
 <template>
@@ -52,12 +84,13 @@ const viewCar = (id=1)=>{
 
     <!--    cards-->
     <div class="flex gap-2 flex-wrap items-center justify-start px-4">
-      <car-card @click="viewCar" v-for="item in 5"/>
+      <car-card @click="viewCar(vehicle?.id)" v-for="vehicle in vehicles" :key="vehicle?.id" :carObject="vehicle"/>
     </div>
 
     <!--    cards-->
-
-    <el-button type="info" round size="large" :icon="ArrowRight">Explore Our Garage</el-button>
+    <el-button type="primary" round size="large"
+               @click="loadMoreCars"
+               :icon="ArrowDown">Load More</el-button>
 
     <div class="py-4 px-16 bg-gray-100 rounded-lg flex items-center justify-center w-fit text-center hidden">
       <div class="text-4xl font-extrabold text-orange-400">Best Car Dealers / Renters in Kenya</div>

@@ -24,7 +24,7 @@ const routes = [
     children: [
       {
         name:'car',
-        path: 'car/:id',
+        path: 'car/:carId',
         component: CarPopUp,
         requiresAuth: false,
         meta: {
@@ -115,7 +115,7 @@ const routes = [
           children: [
             {
               name:'rent-car',
-              path: 'rent-car/:id',
+              path: 'rent-car/:carId',
               component: CarPopUp,
               requiresAuth: false,
               meta: {
