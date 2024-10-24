@@ -7,8 +7,11 @@ import {ref, onMounted} from "vue"
 import store from "@/store/index.js";
 const attemptSubmit = ()=>{
   store.state.carToRent.carObject = vehicleDetails?.value
+  localStorage.setItem("carObject", JSON.stringify(vehicleDetails?.value));
+
   if (route.name === 'car'){
     store.state.rentCar = true
+    localStorage.setItem("rentCar", JSON.stringify(true));
     router.push({name:'login'})
   }else {
     router.push({name:'checkout'})
@@ -33,6 +36,10 @@ const getVehicleById = ()=>{
 
 
 }
+
+const disabledDate = (time) => {
+  return time.getTime() < Date.now();
+};
 
 onMounted(()=>{
   getVehicleById();
@@ -69,12 +76,13 @@ const dateRange = ref('')
 
         <el-date-picker
             v-model="store.state.carToRent.dateRange"
-            type="daterange"
+            type="datetimerange"
             size="large"
             clearable
             style="width: 100%"
             range-separator="To"
             start-placeholder="Start date"
+            :disabled-date="disabledDate"
             end-placeholder="End date"
         />
 

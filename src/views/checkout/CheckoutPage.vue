@@ -47,6 +47,7 @@
       <img class=" h-auto w-full md:w-[30%]" alt="bugatti" src="/bg1.png">
     </div>
 
+
     <el-empty v-if="showError || rentalDetails === null"/>
 
     <div v-else
