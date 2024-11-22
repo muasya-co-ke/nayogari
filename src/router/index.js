@@ -79,7 +79,7 @@ const routes = [
         },
         {
           name: 'checkout',
-          path: 'checkout',
+          path: 'checkout/:id',
           component: CheckoutPage,
           requiresAuth: true,
           meta: {

@@ -1,4 +1,4 @@
-export const baseUrl = "https://kejacrm-api-0d785412ff3f.herokuapp.com/api/"
+export const baseUrl = "https://car-rental-api-production-2584.up.railway.app"
 
 export const headers = {
     "Content-Type": "application/json",

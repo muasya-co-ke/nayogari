@@ -54,7 +54,7 @@ onMounted(()=>{
 
 
 const rentCar = (id)=>{
-  router.push({name: 'rent-car', params: {carId: 1 }})
+  router.push({name: 'rent-car', params: {carId: id }})
 }
 </script>
 
@@ -65,7 +65,7 @@ const rentCar = (id)=>{
 
 
     <div class="h-fit w-full flex flex-wrap items-start justify-start gap-4 gap-y-4">
-      <CarCard @click="rentCar" :car-object="vehicle" v-for="vehicle in vehicles" :key="vehicle"/>
+      <CarCard @click="rentCar(vehicle?.id)" :car-object="vehicle" v-for="vehicle in vehicles" :key="vehicle"/>
     </div>
   </div>
 

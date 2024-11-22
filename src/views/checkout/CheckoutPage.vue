@@ -3,37 +3,36 @@
   import {onMounted, ref} from "vue";
   import {formatDate} from "../../utility/functions.js";
   import router from "@/router/index.js";
+  import {useRoute} from "vue-router";
+  import {baseUrl} from "../../utility/constants.js";
 
   const rentalDetails = ref(null)
   const showError = ref(false)
 
+  const route = useRoute()
+
+  const makePayment = ()=>{
+    store.dispatch("postData", {url : 'payments', data : {
+        rental: route?.params?.id,
+        amount_paid : bookingDetails.value?.total_cost,
+        payment_date: new Date(),
+        payment_method: 'mpesa'
+      }}).then((res) => {
+        router.push({name:'cars'})
+    })
+  }
+
+  const bookingDetails = ref({})
+  const formState = ref({})
+
   const getRentalDetails = ()=>{
-    let authData = JSON.parse(localStorage.getItem("authData"))
-
-    if (!store.state?.carToRent || !store.state?.carToRent?.carObject || !store.state?.carToRent?.dateRange){
-      console.log('defult')
-      router.push({name: 'cars'})
-    }else {
-      console.log(store.state?.carToRent, 'failed')
-      if (JSON.parse(localStorage.getItem("authData"))?.user){
-        store.dispatch('postData', {data: {
-            customer: authData.user?.id,
-            car:store.state?.carToRent?.carObject?.id,
-            rental_date:store.state?.carToRent?.dateRange?.[0] || null,
-            return_date:store.state?.carToRent?.dateRange?.[1] || null
-          }, url:'rentals'})
-            .then((response)=>{
-              rentalDetails.value = response.data
-              showError.value = false
-            }).catch((err)=>{
-              showError.value = true
+    store.dispatch('fetchSingleItem', {url:'rentals', id:route?.params.id})
+        .then((response)=>{
+          bookingDetails.value = response?.data
         })
-      }else {
-        router.push({name:'login'})
-      }
-
-    }
-
+        .catch(()=>{
+          showError.value = true
+        })
   }
 
   onMounted(()=>{
@@ -42,37 +41,35 @@
 </script>
 
 <template>
-  <div class="h-full flex flex-col items-center justify-start gap-8">
+  <div class="h-full flex flex-col items-center justify-between gap-8">
     <div class="w-full flex flex-col items-center justify-center gap-6">
-      <img class=" h-auto w-full md:w-[30%]" alt="bugatti" src="/bg1.png">
+      <img class=" h-auto w-full md:w-[30%]" alt="bugatti" :src="(baseUrl + bookingDetails?.car_details?.car_image)">
     </div>
 
-
-    <el-empty v-if="showError || rentalDetails === null"/>
+    <el-empty v-if="showError || bookingDetails === null"/>
 
     <div v-else
         class="flex flex-col md:grid md:grid-cols-2 w-full items-start justify-between gap-4 h-fit">
       <div class="flex flex-col items-center gap-2 border p-4 rounded-lg">
         <span class="font-bold text-2xl text-gray-500">Rent Cost</span>
-        <span>KES {{rentalDetails?.total_cost}}</span>
+        <span>KES {{bookingDetails?.total_cost}}</span>
       </div>
 
       <div class="flex flex-col items-center gap-2 border p-4 rounded-lg">
         <span class="font-bold text-2xl text-gray-500">Rent Period</span>
         <span class="flex gap-2">
-          <span class="font-bold">{{ formatDate(rentalDetails?.rental_date) }} </span>
+          <span class="font-bold">{{ formatDate(bookingDetails?.rental_date) }} </span>
           To
-          <span class="font-bold">{{ formatDate(rentalDetails?.return_date) }}</span>
+          <span class="font-bold">{{ formatDate(bookingDetails?.return_date) }}</span>
         </span>
       </div>
     </div>
 
-    <div v-if="rentalDetails !== null || !showError " class="flex flex-col items-center gap-2 w-full md:w-1/2">
-      <span class="font-bold text-3xl text-blue-500">Payment Details</span>
+    <div v-if="bookingDetails !== null || !showError " class="flex flex-col items-center gap-2 w-full">
+      <span class="font-bold text-3xl">Payment Details</span>
       <span class="font-bold">Method : Mpesa</span>
-      <el-input-number style="width: 100%;" size="large" placeholder="amount"></el-input-number>
-      <el-input size="large" placeholder="mpesa reference number"></el-input>
-      <el-button class="w-full" type="primary" size="large" round>Complete Payment</el-button>
+      <el-input-number disabled v-model="bookingDetails.total_cost" style="width: 100%;" size="large" placeholder="amount"></el-input-number>
+      <el-button class="w-full" type="primary" @click="makePayment" size="large">Complete Rental Payment</el-button>
     </div>
 
   </div>

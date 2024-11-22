@@ -7,14 +7,29 @@ import {ref, onMounted} from "vue"
 import store from "@/store/index.js";
 const attemptSubmit = ()=>{
   store.state.carToRent.carObject = vehicleDetails?.value
-  localStorage.setItem("carObject", JSON.stringify(vehicleDetails?.value));
-
-  if (route.name === 'car'){
-    store.state.rentCar = true
-    localStorage.setItem("rentCar", JSON.stringify(true));
-    router.push({name:'login'})
+  const authData = JSON.parse(localStorage.getItem("authData"));
+  console.log('in function')
+  if (authData?.user) {
+    console.log('with user')
+    store.dispatch('postData', {url:'rentals', data: {
+        car: vehicleDetails?.value?.id,
+        rental_date: store.state.carToRent.startDate,
+        return_date: store.state.carToRent.endDate,
+        customer: authData?.user?.id
+      }})
+        .then((response)=>{
+          router.push({name:'checkout',params:{id:response?.data?.id}})
+        })
   }else {
-    router.push({name:'checkout'})
+    console.log('no user')
+    localStorage.setItem("rentalDetails", JSON.stringify( {
+      car: vehicleDetails?.value?.id,
+      rental_date: store.state.carToRent.startDate,
+      return_date: store.state.carToRent.endDate,
+      customer: authData?.user?.id
+    }));
+    router.push({name:'login'})
+
   }
 
 }
@@ -52,7 +67,10 @@ const dateRange = ref('')
   <BaseDialog>
     <template #title>
       <div class="flex items-center gap-2">
-        <div class="h-full font-bold flex items-center text-center justify-center text-xl">Bugatti Chevron</div>
+        <div v-if="vehicleDetails?.car_make" class="h-full font-bold flex items-center text-center justify-center text-xl">
+          {{vehicleDetails?.car_make}} ,
+          {{vehicleDetails?.car_model}}
+        </div>
       </div>
     </template>
 
@@ -74,23 +92,33 @@ const dateRange = ref('')
             class="mt-4 text-orange-500"
         >To Rent This Car , Select Start and End Period</div>
 
-        <el-date-picker
-            v-model="store.state.carToRent.dateRange"
-            type="datetimerange"
-            size="large"
-            clearable
-            style="width: 100%"
-            range-separator="To"
-            start-placeholder="Start date"
-            :disabled-date="disabledDate"
-            end-placeholder="End date"
-        />
+        {{store.state.carToRent.dateRange}}
+        <div class="flex flex-wrap gap-2">
+          <el-date-picker
+              v-model="store.state.carToRent.startDate"
+              type="datetime"
+              size="large"
+              clearable
+              placeholder="Start date"
+              :disabled-date="disabledDate"
+          />
+          <el-date-picker
+              v-model="store.state.carToRent.endDate"
+              type="datetime"
+              placeholder="End date"
+              size="large"
+              clearable
+              :disabled-date="disabledDate"
+          />
+        </div>
 
-        <el-button size="large" type="success"
-                   :disabled="store.state.carToRent.dateRange ? false : true"
+        <el-button size="large" type="primary"
+                   :disabled="(!(store.state.carToRent.startDate && store.state.carToRent.endDate))"
                    plain
                    class=""
-                   round @click="attemptSubmit">Rent This Car</el-button>
+                   @click="attemptSubmit">
+          Rent This Car
+        </el-button>
       </div>
     </template>
   </BaseDialog>

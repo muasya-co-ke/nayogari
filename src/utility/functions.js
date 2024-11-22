@@ -136,6 +136,7 @@ export function formatDate(dateString) {
 export function deleteLocalStorageInformation(){
     localStorage.removeItem("authData")
     localStorage.removeItem("userDetails")
+    localStorage.removeItem("rentalDetails")
 }
 
 

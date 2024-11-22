@@ -33,7 +33,7 @@ const authoriseQuickBooks = async () => {
 
 const logout = ()=>{
   deleteLocalStorageInformation()
-  router.replace({name:'auth'})
+  router.replace({name:'home'})
 }
 const authData = JSON.parse(localStorage.getItem("authData")) || {}
 

@@ -103,13 +103,19 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         .then((resp) => {
           localStorage.setItem("authData", JSON.stringify(resp.data));
           loginLoading.value = false;
+          const rentalDetails = JSON.parse(localStorage.getItem("rentalDetails"));
 
-          if (store.state.rentCar) {
-            store.state.rentCar = false
-            router.push({name:'checkout'})
+
+          if (rentalDetails) {
+            store.dispatch('postData', {url:'rentals',
+              data: {...rentalDetails, customer:resp?.data?.user?.id}})
+                .then((response : any)=>{
+                  router.push({name:'checkout',params:{id:response?.data?.id}})
+                })
           }else {
             router.push({name:'cars'})
           }
+
         })
           .catch((err)=>{
             loginLoading.value = false;
