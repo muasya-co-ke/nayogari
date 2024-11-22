@@ -1,74 +1,79 @@
   <template>
-    <el-form
-      ref="ruleForm"
-      :model="form"
-      :rules="rules"
-      class="flex flex-col gap-4 w-full h-full"
-      label-position="top"
-    >
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
-        <el-form-item label="First Name" prop="first_name">
-          <el-input
-              v-model="form.first_name"
-              :prefix-icon="UserIcon"
-              placeholder="first name"
-              size="large"
-              type="text"
-          />
-        </el-form-item>
-        <el-form-item label="Last Name" prop="last_name">
-          <el-input
-              v-model="form.last_name"
-              :prefix-icon="UserIcon"
-              placeholder="last name"
-              size="large"
-              type="text"
-          />
-        </el-form-item>
-
-        <el-form-item label="Email" prop="email">
-          <el-input
-              v-model="form.email"
-              :prefix-icon="FolderOpened"
-              placeholder="email"
-              size="large"
-              type="email"
-          />
-        </el-form-item>
-
-        <el-form-item label="National Id" prop="last_name">
-          <el-input
-              v-model="form.last_name"
-              :prefix-icon="UserIcon"
-              placeholder="last name"
-              size="large"
-              type="text"
-          />
-        </el-form-item>
-
-      </div>
-
-
-      <div class="flex w-full ">
-        <el-button
-          :loading="submitLoading"
-          class="w-fit "
-          size="large"
-          style="border-radius: 4px"
-          type="primary"
-          html-type="submit"
-          @click="submitForm(ruleForm)"
+    <BaseDialog>
+      <template #content>
+        <el-form
+            ref="ruleForm"
+            :model="form"
+            :rules="rules"
+            class="flex flex-col gap-4 w-full h-full"
+            label-position="top"
         >
-          Update Profile
-        </el-button>
-      </div>
-      <div class="text-sm hidden">
-        <span class="text-gray-400"> Already have an Account ? </span>
-        <router-link :to="{name:'login'}" class="text-blue-400 hover:text-blue-500 hover:font-bold">
-          Sign In </router-link>
-      </div>
-    </el-form>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
+            <el-form-item label="First Name" prop="first_name">
+              <el-input
+                  v-model="form.first_name"
+                  :prefix-icon="UserIcon"
+                  placeholder="first name"
+                  size="large"
+                  type="text"
+              />
+            </el-form-item>
+            <el-form-item label="Last Name" prop="last_name">
+              <el-input
+                  v-model="form.last_name"
+                  :prefix-icon="UserIcon"
+                  placeholder="last name"
+                  size="large"
+                  type="text"
+              />
+            </el-form-item>
+
+            <el-form-item label="Email" prop="email">
+              <el-input
+                  v-model="form.email"
+                  :prefix-icon="FolderOpened"
+                  placeholder="email"
+                  size="large"
+                  type="email"
+              />
+            </el-form-item>
+
+            <el-form-item label="National Id" prop="last_name">
+              <el-input
+                  v-model="form.last_name"
+                  :prefix-icon="UserIcon"
+                  placeholder="last name"
+                  size="large"
+                  type="text"
+              />
+            </el-form-item>
+
+          </div>
+
+
+          <div class="flex w-full ">
+            <el-button
+                :loading="submitLoading"
+                class="w-fit "
+                size="large"
+                style="border-radius: 4px"
+                type="primary"
+                html-type="submit"
+                @click="submitForm(ruleForm)"
+            >
+              Update Profile
+            </el-button>
+          </div>
+          <div class="text-sm hidden">
+            <span class="text-gray-400"> Already have an Account ? </span>
+            <router-link :to="{name:'login'}" class="text-blue-400 hover:text-blue-500 hover:font-bold">
+              Sign In </router-link>
+          </div>
+        </el-form>
+      </template>
+    </BaseDialog>
+
 </template>
 
 <script lang="ts" setup>
@@ -80,6 +85,7 @@ import router from "@/router";
 import { FolderOpened } from '@element-plus/icons-vue'
 import BaseLoader from "@/components/base/BaseLoader.vue";
 import {useRoute} from "vue-router"
+import BaseDialog from "@/components/base/BaseDialog.vue";
 
 const route = useRoute()
 

@@ -4,8 +4,7 @@ import ExternalAuth from "@/views/auth/forms/ExternalAuth.vue"
 import { onMounted,ref, watch } from "vue"
 
 const loginImages = ref([
-  'bg1.png',
-  'bg3.png',
+  'bg4.png',
   ])
 
 const imageIndex = ref(0)
@@ -17,7 +16,7 @@ const switchImages = (index = 0, isClickEvent=false)=>{
   }else{
     timeout = setTimeout(()=>{
       imageIndex.value = index
-    }, 2000)
+    }, 200000)
   }
 }
 

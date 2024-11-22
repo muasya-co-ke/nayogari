@@ -165,12 +165,18 @@ watch(route, updateBreadcrumbs, { immediate: true });
 
         <div class="bg-gray-50 h-full w-full">
           <router-view :style="routerViewStyle"/>
+          <div class="w-full p-4 bg-white">dndndn</div>
         </div>
 
       </div>
 
     </div>
 
+    <div class="py-2 border w-full text-center bg-gray-200 text-gray-500">
+      <marquee behavior="scroll" direction="left">
+        Gacheru Limited
+      </marquee>
+    </div>
   </div>
   <TheSideNav v-if="store.state.ShowMobileMenu"/>
 
