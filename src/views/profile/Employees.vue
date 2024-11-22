@@ -57,10 +57,27 @@ const activateUser =  (id)=> {
 }
 const allowDelete = ref('');
 
+const downloadReport = () => {
+  try {
+    store.dispatch('downloadFirmData', {
+      url: 'users/download/report',
+    })
+        .then((response) => {
+
+        });
+  } catch (error) {
+    console.error("Error downloading report:", error);
+  }
+};
+
+const authData = JSON.parse(localStorage.getItem("authData"));
+
 </script>
 
 <template>
   <router-view/>
+
+  <el-button type="primary" v-if="authData?.user?.user_type === 'car_owner'" @click="downloadReport" class="mb-2 mr-2">Download User Report</el-button>
 
   <BaseDataTable
       :columns="columns"
