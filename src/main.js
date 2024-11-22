@@ -34,7 +34,7 @@ api.interceptors.response.use(undefined, function (err) {
                 message: 'Session Expired',
             });
             deleteLocalStorageInformation();
-            router.push({ name: "auth" });
+            router.push({ name: "home" });
         }
 
         else if (err.response.status === 403) {

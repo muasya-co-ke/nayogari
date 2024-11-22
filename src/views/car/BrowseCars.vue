@@ -63,36 +63,6 @@ const rentCar = (id)=>{
 
     <router-view/>
 
-    <div class="flex flex-col gap-2 h-full w-full md:w-[300px] pb-2 md:border-r md:pr-2">
-      <div class="font-semibold text-lg">Filters</div>
-
-      <div class="text-blue-500 mt-2">By Make</div>
-      <div class=" w-full">
-        <el-checkbox-group
-            v-model="checkedCities"
-            @change="handleCheckedCitiesChange"
-        >
-          <el-checkbox v-for="city in cities" :key="city" :label="city" :value="city">
-            {{ city }}
-          </el-checkbox>
-        </el-checkbox-group>
-      </div>
-
-      <div class="text-blue-500 mt-2">By Year</div>
-      <div class=" w-full">
-        <el-checkbox-group
-            v-model="checkedCities"
-            @change="handleCheckedCitiesChange"
-        >
-          <el-checkbox v-for="city in cities" :key="city" :label="city" :value="city">
-            {{ city }}
-          </el-checkbox>
-        </el-checkbox-group>
-      </div>
-
-      <div class="text-blue-500 mt-2">By Name</div>
-      <el-input placeholder="search by name" size="large"/>
-    </div>
 
     <div class="h-fit w-full flex flex-wrap items-start justify-start gap-4 gap-y-4">
       <CarCard @click="rentCar" :car-object="vehicle" v-for="vehicle in vehicles" :key="vehicle"/>

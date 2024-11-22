@@ -23,7 +23,7 @@ const props = defineProps({
         <img class=" h-auto w-full rounded-t-lg min-h-16" :alt="carObject?.car_make" :src="carObject?.car_image">
       </div>
       <div class="flex flex-col gap-2 capitalize p-2">
-        <h3 class="text-gray-500">{{carObject?.car_model}}</h3>
+        <h3 class="text-blue-900">{{carObject?.car_model}}</h3>
         <div class="flex justify-between font-bold">
           <div>{{carObject?.car_make}},{{carObject?.car_manufactured_year}}</div>
           <div>KES {{carObject?.daily_rental_rate}}/day</div>

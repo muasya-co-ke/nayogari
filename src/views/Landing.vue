@@ -47,38 +47,31 @@ onMounted(()=>{
     <router-view/>
 
     <div class="h-[300px] md:h-[400px]  xl:h-[650px] flex flex-col items-start justify-center
-     bg-cover bg-no-repeat bg-top bg-[url('/bg4.jpg')]
+     bg-cover bg-no-repeat bg-center bg-[url('/bg4.jpg')]
       w-full bg-blue-500 relative">
 
-      <div class="absolute shadow top-0 md:top-10 left-1/2 transform -translate-x-1/2 w-full md:w-[90%] h-fit
+      <div class="absolute shadow top-0 md:top-2 left-1/2 transform -translate-x-1/2 w-full md:w-[90%] h-fit
        md:rounded-full bg-gray-100 py-2 px-4 flex justify-between items-center">
         <div class="font-extrabold text-xlx  text-gray-800">MACAR</div>
         <div class="flex gap-4 h-fit items-center">
-          <span>Home</span>
-          <span>Pricing</span>
-          <el-button type="primary" round size="large">Get Started</el-button>
+          <router-link to="/">Home</router-link>
+
+          <router-link to="/login">
+            <el-button type="primary" round size="large">Get Started</el-button>
+          </router-link>
+
         </div>
       </div>
 
       <div class="mt-10 md:mt-0 w-full h-full text-gray-600 flex flex-col items-center justify-center bg-white bg-opacity-80">
-        <h3 class="text-4xl md:text-7xl font-extrabold text-gray-900 w-full text-center">The Best Platform for Car Rental</h3>
-
-        <p class="text-md">Experience Luxury</p>
-
-        <el-button round type="primary" size="large" :icon="ArrowRight">
-          Explore Our Garage
-        </el-button>
+        <h3 class="text-4xl md:text-7xl font-extrabold text-blue-900 w-full text-center">
+          Ride Easy, Pay Less
+          <br/>
+          &nbsp;
+          Kenya’s Smoothest Car Hire
+        </h3>
 
       </div>
-    </div>
-
-    <div class="flex gap-2 px-2 flex-wrap justify-center items-center w-fit">
-      <el-button size="large">Toyota</el-button>
-      <el-button size="large">Subaru</el-button>
-      <el-button size="large">BMW</el-button>
-      <el-button size="large">Kia</el-button>
-      <el-button size="large">RollsRoys</el-button>
-
     </div>
 
 
@@ -96,7 +89,7 @@ onMounted(()=>{
       <div class="text-4xl font-extrabold text-orange-400">Best Car Dealers / Renters in Kenya</div>
     </div>
 
-    <div class="p-4 w-full bg-black text-white flex items-center justify-between">
+    <div class="p-4 w-full bg-blue-500 text-white flex items-center justify-between">
       <div class="font-extrabold text-xlx">MACAR</div>
       <div>Gacheru Limited</div>
     </div>
