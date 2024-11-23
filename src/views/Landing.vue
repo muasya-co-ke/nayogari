@@ -21,7 +21,7 @@ const loadMoreCars = ()=>{
 }
 
 const getVehicles  = ()=>{
-      store.dispatch("fetchList", {url: `cars?page=${pageCount.value}`})
+      store.dispatch("fetchList", {url: `cars`})
         .then((res)=>{
 
           if (loadMore) {
@@ -81,9 +81,9 @@ onMounted(()=>{
     </div>
 
     <!--    cards-->
-    <el-button type="primary" round size="large"
-               @click="loadMoreCars"
-               :icon="ArrowDown">Load More</el-button>
+<!--    <el-button type="primary" round size="large"-->
+<!--               @click="loadMoreCars"-->
+<!--               :icon="ArrowDown">Load More</el-button>-->
 
     <div class="py-4 px-16 bg-gray-100 rounded-lg flex items-center justify-center w-fit text-center hidden">
       <div class="text-4xl font-extrabold text-orange-400">Best Car Dealers / Renters in Kenya</div>

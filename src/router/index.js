@@ -10,6 +10,7 @@ import CheckoutPage from "@/views/checkout/CheckoutPage.vue";
 import BrowseCars from "@/views/car/BrowseCars.vue";
 import Employees from "@/views/profile/Employees.vue";
 import RegisterForm from "@/views/auth/forms/RegisterForm.vue";
+import PaymentList from "@/views/payments/PaymentList.vue";
 
 
 const routes = [
@@ -59,6 +60,15 @@ const routes = [
       slug: 'Dashboard',
     },
     children : [
+      {
+        name: 'payments',
+        path: 'payments',
+        component: PaymentList,
+        requiresAuth: true,
+        meta: {
+          slug: 'Payments',
+        },
+      },
         {
           name: 'profile',
           path: 'profile',
