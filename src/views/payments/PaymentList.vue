@@ -26,12 +26,7 @@ const columns = ref([
     title: "Date Of Payment",
     dataIndex: "created_at",
     key: "created_at",
-  },
-  {
-    title: "Actions",
-    dataIndex: "",
-    key: "actions",
-  },
+  }
 ]);
 
 
@@ -164,19 +159,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           </el-tag>
         </template>
 
-        <template v-if="slotProps.column.key === 'actions'">
-          <ElButton type="primary"
-                    @click="()=>{
-                      router.push({name: 'edit-customer', params:{id: slotProps?.text?.id}})
-                    }"
-                    size="default"
-                    plain>
-            <template #icon>
-              <EditPen class="h-fit"/>
-            </template>
-            <template #default>Edit</template>
-          </ElButton>
-        </template>
       </template>
     </BaseDataTable>
   </div>

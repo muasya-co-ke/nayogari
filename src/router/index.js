@@ -11,6 +11,8 @@ import BrowseCars from "@/views/car/BrowseCars.vue";
 import Employees from "@/views/profile/Employees.vue";
 import RegisterForm from "@/views/auth/forms/RegisterForm.vue";
 import PaymentList from "@/views/payments/PaymentList.vue";
+import CarTable from "@/views/car/CarTable.vue";
+import CreateEditCar from "@/views/car/CreateEditCar.vue";
 
 
 const routes = [
@@ -68,6 +70,35 @@ const routes = [
         meta: {
           slug: 'Payments',
         },
+      },
+      {
+        name: 'my-cars',
+        path: 'my-cars',
+        component: CarTable,
+        requiresAuth: true,
+        meta: {
+          slug: 'Cars',
+        },
+        children : [
+          {
+            name: 'create-car',
+            path: 'create-car',
+            component: CreateEditCar,
+            requiresAuth: true,
+            meta: {
+              slug: 'Cars',
+            },
+          },
+          {
+            name: 'edit-car',
+            path: 'edit-car/:id',
+            component: CreateEditCar,
+            requiresAuth: true,
+            meta: {
+              slug: 'Cars',
+            },
+          },
+        ]
       },
         {
           name: 'profile',

@@ -165,7 +165,6 @@ watch(route, updateBreadcrumbs, { immediate: true });
 
         <div class="bg-gray-50 h-full w-full">
           <router-view :style="routerViewStyle"/>
-          <div class="w-full p-4 bg-white">dndndn</div>
         </div>
 
       </div>

@@ -16,24 +16,23 @@ const props = defineProps(
 
 const columns = ref([
   {
-    title: "First Name",
-    dataIndex: "first_name",
-    key: "first_name",
+    title: "Make",
+    dataIndex: "car_make",
+    key: "car_make",
   },
   {
-    title: "Last Name",
-    dataIndex: "last_name",
-    key: "last_name",
+    title: "Model",
+    dataIndex: "car_model",
+    key: "car_model",
+  },{
+    title: "Plate Number",
+    dataIndex: "car_number_plate",
+    key: "car_number_plate",
   },
   {
-    title: "Role",
-    dataIndex: "user_type",
-    key: "user_type",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
+    title: "Daily Rental Rate",
+    dataIndex: "daily_rental_rate",
+    key: "daily_rental_rate",
   },
   {
     title: "Actions",
@@ -47,21 +46,21 @@ const goTo = (name, id)=>{
 }
 
 const deleteUser =  (id)=> {
-  store.dispatch('deleteData',{id: id, url: 'users'});
+  store.dispatch('deleteData',{id: id, url: 'cars'});
   allowDelete.value = ''
 }
 
 
 const activateUser =  (id)=> {
-  store.dispatch('putData',{id: id, url: 'users', data:null});
+  store.dispatch('putData',{id: id, url: 'cars', data:null});
 }
 const allowDelete = ref('');
 
 const downloadReport = () => {
   try {
     store.dispatch('downloadFirmData', {
-      url: 'users/download/report',
-      report_name:'user_report'
+      url: 'cars/download/report',
+      report_name:'car_report'
     })
         .then((response) => {
 
@@ -82,14 +81,15 @@ const authData = JSON.parse(localStorage.getItem("authData"));
   <BaseDataTable
       :columns="columns"
       show-other-items
-      fetch-url="users/"
-      title="System Users">
+      create-route-name="create-car"
+      fetch-url="cars/"
+      title="My Cars">
 
     <template #otherItems>
       <el-button type="primary"
                  size="large"
                  v-if="authData?.user?.user_type === 'car_owner'" @click="downloadReport"
-                 class="mb-2 mr-2">Download User Report
+                 class="mb-2 mr-2">Download Car Report
       </el-button>
 
     </template>
@@ -110,7 +110,7 @@ const authData = JSON.parse(localStorage.getItem("authData"));
         <!--                      {{ slotProps.text }}-->
 
         <ElButton type="primary"
-                  @click="goTo('edit-user', slotProps.text?.id)"
+                  @click="goTo('edit-car', slotProps.text?.id)"
                   size="default" plain>
           <template #icon>
             <EditPen class="h-fit"/>
